@@ -20,20 +20,31 @@ export default function Navbar() {
                   <Logo />
                 </div>
               </div>
-              {session ? (
-                <>
-                  <UserIcon className="h-6 w-6 rounded-full text-gray-500" />
-                </>
-              ) : (
-                <div className="my-auto">
+              <div className="my-auto">
+                {session ? (
+                  <div className="inline-flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-xs text-gray-600">
+                        You are logged in as
+                      </p>
+                      <p>{session.user?.email}</p>
+                    </div>
+                    <button
+                      className="px-3 py-2 shadow border rounded-md"
+                      onClick={() => signOut()}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
                   <button
                     className="px-3 py-2 shadow border rounded-md"
                     onClick={() => signIn()}
                   >
                     Login
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </>

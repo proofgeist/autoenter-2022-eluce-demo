@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import { FilemakerAdapter } from "next-auth-adapter-filemaker";
+import EmailProvider from "next-auth/providers/email";
 
 if (
   !process.env.FM_USERNAME ||
@@ -20,7 +21,12 @@ const fmAdapter = FilemakerAdapter({
 
 export default NextAuth({
   // Configure one or more authentication providers
-  providers: [],
+  providers: [
+    EmailProvider({
+      from: process.env.EMAIL_FROM,
+      server: process.env.EMAIL_SERVER,
+    }),
+  ],
   session: { strategy: "jwt" },
   adapter: fmAdapter.Adapter,
 });
