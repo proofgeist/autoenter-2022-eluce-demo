@@ -29,4 +29,24 @@ export default NextAuth({
   ],
   session: { strategy: "jwt" },
   adapter: fmAdapter.Adapter,
+  callbacks: {
+    jwt({ token, user, profile, account }) {
+      console.log("jwt", { token, user, profile, account });
+      if (user)
+        token.user = {
+          id: user.id,
+          email: user.email ?? "",
+          emailVerified: user.emailVerified ?? "",
+          image: user.image ?? "",
+          name: user.name ?? "",
+          role: user.role ?? "",
+        };
+      return token;
+    },
+    session({ session, user, token }) {
+      console.log("session", { session, user, token });
+      session.user = token.user;
+      return session;
+    },
+  },
 });

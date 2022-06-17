@@ -1,11 +1,17 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { withTRPC } from "@trpc/next";
-import { AppType } from "next/dist/shared/lib/utils";
+import { ReactQueryDevtools } from "react-query/devtools";
+
 import { AppRouter } from "./api/trpc/[trpc]";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <div>
+      <Component {...pageProps} />
+      <ReactQueryDevtools />
+    </div>
+  );
 }
 
 export default withTRPC<AppRouter>({
