@@ -31,7 +31,7 @@ export default NextAuth({
   adapter: fmAdapter.Adapter,
   callbacks: {
     jwt({ token, user, profile, account }) {
-      console.log("jwt", { token, user, profile, account });
+      // console.log("jwt", { token, user, profile, account });
       if (user)
         token.user = {
           id: user.id,
@@ -44,7 +44,7 @@ export default NextAuth({
       return token;
     },
     session({ session, user, token }) {
-      console.log("session", { session, user, token });
+      // console.log("session", { session, user, token });
       session.user = token.user;
       return session;
     },
