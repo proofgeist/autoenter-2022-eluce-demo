@@ -61,13 +61,13 @@ export default function Profile() {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  className="shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md"
                   placeholder="Enter your name"
                 />
               </div>
               <div className="flex w-full justify-end mt-4">
                 <button
-                  className="bg-teal-500 hover:bg-teal-700 px-3 py-1.5 rounded text-white shadow inline-flex gap-2 items-center disabled:opacity-70"
+                  className="bg-primary hover:bg-teal-700 px-3 py-1.5 rounded text-white shadow inline-flex gap-2 items-center disabled:opacity-70"
                   disabled={formLoading}
                   type="submit"
                 >
