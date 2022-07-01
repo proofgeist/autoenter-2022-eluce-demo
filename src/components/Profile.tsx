@@ -8,7 +8,18 @@ export default function Profile() {
   const [name, setName] = useState(session?.user.name ?? "");
   const [formLoading, setformLoading] = useState(false);
   const { mutateAsync: handleSubmit } = trpc.useMutation(["user.update"]);
-  const { data: userMe, refetch } = trpc.useQuery(["user.me"]);
+  const {
+    data: userMe,
+    refetch,
+    isFetching,
+  } = trpc.useQuery(["user.me"], {
+    enabled: false,
+    retry: false,
+    onError: (e) => {
+      console.error(e);
+      alert(e.message);
+    },
+  });
   useEffect(() => {
     if (userMe) setName(userMe.name);
   }, [userMe]);
@@ -17,7 +28,7 @@ export default function Profile() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
       <h2 className="font-bold text-2xl">Profile</h2>
       {!session ? (
-        <>You must be logged in to see your profile</>
+        <>You must be logged in to see your profile! Please log in</>
       ) : (
         <>
           <div>
@@ -26,7 +37,21 @@ export default function Profile() {
               {JSON.stringify(session.user, null, 4)}
             </pre>
             <p className="mt-4">
-              Your User record (from tRPC Query, updated periodically)
+              Your User record (from tRPC Query, to update,{" "}
+              {isFetching ? (
+                <span className="text-primary inline-flex gap-1 items-center">
+                  <FaCircleNotch className="animate-spin" />
+                  fetching...
+                </span>
+              ) : (
+                <span
+                  onClick={() => refetch()}
+                  className="text-primary cursor-pointer"
+                >
+                  click here
+                </span>
+              )}
+              )
             </p>
             <pre className="bg-gray-200 p-4 shadow-inner rounded">
               {JSON.stringify(userMe, null, 4)}

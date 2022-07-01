@@ -19,10 +19,15 @@ export const userRouter = createRouter()
   })
   .query("me", {
     async resolve({ ctx: { session } }) {
-      if (!session) throw new TRPCError({ code: "UNAUTHORIZED" });
-      const {
-        data: { fieldData },
-      } = await client.findOne({ query: { id: `==${session.user.id}` } });
-      return fieldData;
+      try {
+        if (!session) throw new TRPCError({ code: "UNAUTHORIZED" });
+        const {
+          data: { fieldData },
+        } = await client.findOne({ query: { id: `==${session.user.id}` } });
+        return fieldData;
+      } catch (e) {
+        console.error(e);
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
     },
   });
