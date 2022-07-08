@@ -13,7 +13,7 @@ export default function Profile() {
     refetch,
     isFetching,
   } = trpc.useQuery(["user.me"], {
-    enabled: false,
+    enabled: !!session,
     retry: false,
     onError: (e) => {
       console.error(e);
@@ -28,31 +28,11 @@ export default function Profile() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
       <h2 className="font-bold text-2xl">Profile</h2>
       {!session ? (
-        <>You must be logged in to see your profile! Please log in</>
+        <>You must be logged in to see your profile</>
       ) : (
         <>
           <div>
-            <p>Your Session data (from JWT, updated on login)</p>
-            <pre className="bg-gray-200 p-4 shadow-inner rounded">
-              {JSON.stringify(session.user, null, 4)}
-            </pre>
-            <p className="mt-4">
-              Your User record (from tRPC Query, to update,{" "}
-              {isFetching ? (
-                <span className="text-primary inline-flex gap-1 items-center">
-                  <FaCircleNotch className="animate-spin" />
-                  fetching...
-                </span>
-              ) : (
-                <span
-                  onClick={() => refetch()}
-                  className="text-primary cursor-pointer"
-                >
-                  click here
-                </span>
-              )}
-              )
-            </p>
+            <p className="mt-4">Your User record from FileMaker</p>
             <pre className="bg-gray-200 p-4 shadow-inner rounded">
               {JSON.stringify(userMe, null, 4)}
             </pre>
