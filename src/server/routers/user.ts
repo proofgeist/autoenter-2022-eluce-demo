@@ -24,7 +24,6 @@ export const userRouter = createRouter()
         const {
           data: { fieldData },
         } = await client.findOne({ query: { id: `==${session.user.id}` } });
-
         return fieldData;
       } catch (e) {
         console.error(e);

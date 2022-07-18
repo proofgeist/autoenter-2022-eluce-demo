@@ -44,7 +44,7 @@ export default function Profile() {
                 setformLoading(true);
                 console.log({ name });
                 try {
-                  await handleSubmit({ name });
+                  await handleSubmit({ firstName: name });
                   await refetch();
                 } catch (e) {
                   console.error(e);
